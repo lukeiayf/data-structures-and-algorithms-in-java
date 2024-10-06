@@ -25,7 +25,6 @@ public class MergeSortedArrays {
     public static List<Integer> mergeArrays2(List<Integer> arr1, List<Integer> arr2) {
         List<Integer> merged = new ArrayList<>();
         int i = 0, j = 0;
-
         // Merge the arrays while maintaining the order
         while (i < arr1.size() && j < arr2.size()) {
             if (arr1.get(i) <= arr2.get(j)) {
