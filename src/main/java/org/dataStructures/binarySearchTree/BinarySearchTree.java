@@ -1,5 +1,8 @@
 package org.dataStructures.binarySearchTree;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BinarySearchTree {
     private MyTreeNode root;
 
@@ -167,15 +170,64 @@ public class BinarySearchTree {
                 '}';
     }
 
+    //BREADTH FIRST SEARCH METHOD
+    public ArrayList<Integer> breadthFirstSearch() {
+        //we traverse left->right from the root
+        MyTreeNode currentNode = this.root;
+        ArrayList<Integer> list = new ArrayList<>();
+        //we need a queue to keep track of nodes and their children
+        ArrayList<MyTreeNode> queue = new ArrayList<>();
+        queue.add(currentNode);
+
+        while (!queue.isEmpty()) {
+            //we add nodes to the queue and deque to get the first element
+            // to check the current node
+            currentNode = queue.removeFirst();
+            list.add(currentNode.getValue());
+            if (currentNode.getLeft() != null) {
+                queue.add(currentNode.getLeft());
+            }
+            if (currentNode.getRight() != null) {
+                queue.add(currentNode.getRight());
+            }
+        }
+
+        return list;
+    }
+
+    //RECURSIVE BFS
+    public ArrayList<Integer> breadthFirstSearchRecursive(List<MyTreeNode> queue, ArrayList<Integer> list) {
+        if (queue.isEmpty()) {
+            return list;
+        }
+        MyTreeNode currentNode = queue.removeFirst();
+        list.add(currentNode.getValue());
+        if (currentNode.getLeft() != null) {
+            queue.add(currentNode.getLeft());
+        }
+        if (currentNode.getRight() != null) {
+            queue.add(currentNode.getRight());
+        }
+        return breadthFirstSearchRecursive(queue, list);
+    }
+    //      9
+    //   4      20
+    //1   6  15    170
+
     public static void main(String[] args) {
         BinarySearchTree bst = new BinarySearchTree();
+        ArrayList<MyTreeNode> queue = new ArrayList<>();
         bst.insert(9);
         bst.insert(4);
-        bst.insert(5);
+        bst.insert(6);
+        bst.insert(20);
+        bst.insert(170);
         bst.insert(15);
-        bst.insert(270);
+        bst.insert(1);
         System.out.println(bst.traverse(bst.getRoot()));
         System.out.println(bst.lookup(15));
-
+        System.out.println(bst.breadthFirstSearch());
+        queue.add(bst.getRoot());
+        System.out.println(bst.breadthFirstSearchRecursive(queue, new ArrayList<>()));
     }
 }
