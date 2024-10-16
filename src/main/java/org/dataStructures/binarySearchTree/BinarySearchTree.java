@@ -210,6 +210,43 @@ public class BinarySearchTree {
         }
         return breadthFirstSearchRecursive(queue, list);
     }
+
+    //DEPTH FIRST SEARCH
+    //IN ORDER: LEFT->ROOT->RIGHT
+    public ArrayList<Integer> depthFirstSearchInOrder(MyTreeNode node, ArrayList<Integer> list) {
+        if (node.getLeft() != null) {
+            depthFirstSearchInOrder(node.getLeft(), list);
+        }
+        list.add(node.getValue());
+        if (node.getRight() != null) {
+            depthFirstSearchInOrder(node.getRight(), list);
+        }
+        return list;
+    }
+
+    //PRE ORDER: ROOT->LEFT->RIGHT
+    public ArrayList<Integer> depthFirstSearchPreOrder(MyTreeNode node, ArrayList<Integer> list) {
+        list.add(node.getValue());
+        if (node.getLeft() != null) {
+            depthFirstSearchPreOrder(node.getLeft(), list);
+        }
+        if (node.getRight() != null) {
+            depthFirstSearchPreOrder(node.getRight(), list);
+        }
+        return list;
+    }
+
+    //POST ORDER: LEFT->RIGHT->ROOT
+    public ArrayList<Integer> depthFirstSearchPostOrder(MyTreeNode node, ArrayList<Integer> list) {
+        if (node.getLeft() != null) {
+            depthFirstSearchPostOrder(node.getLeft(), list);
+        }
+        if (node.getRight() != null) {
+            depthFirstSearchPostOrder(node.getRight(), list);
+        }
+        list.add(node.getValue());
+        return list;
+    }
     //      9
     //   4      20
     //1   6  15    170
@@ -226,8 +263,11 @@ public class BinarySearchTree {
         bst.insert(1);
         System.out.println(bst.traverse(bst.getRoot()));
         System.out.println(bst.lookup(15));
-        System.out.println(bst.breadthFirstSearch());
+        System.out.println("BFS ITERATIVE: " + bst.breadthFirstSearch());
         queue.add(bst.getRoot());
-        System.out.println(bst.breadthFirstSearchRecursive(queue, new ArrayList<>()));
+        System.out.println("BFS RECURSIVE: " + bst.breadthFirstSearchRecursive(queue, new ArrayList<>()));
+        System.out.println("DFS IN ORDER: " + bst.depthFirstSearchInOrder(bst.getRoot(), new ArrayList<>()));
+        System.out.println("DFS PRE ORDER: " + bst.depthFirstSearchPreOrder(bst.getRoot(), new ArrayList<>()));
+        System.out.println("DFS POST ORDER: " + bst.depthFirstSearchPostOrder(bst.getRoot(), new ArrayList<>()));
     }
 }
