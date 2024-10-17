@@ -3,7 +3,6 @@ package org.dataStructures.linkedList;
 public class MyNode {
     private int value;
     private Object next;
-
     private Object previous;
 
     public MyNode(int value) {

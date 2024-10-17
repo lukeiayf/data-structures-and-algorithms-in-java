@@ -15,6 +15,10 @@ public class MyLinkedList {
 
     private void append(Integer value) {
         MyNode newNode = new MyNode(value);
+        if (this.length == 0) {
+            this.head = newNode;
+            this.tail = newNode;
+        }
         this.tail.setNext(newNode);
         this.tail = newNode;
         this.length++;
@@ -61,6 +65,26 @@ public class MyLinkedList {
         this.length--;
     }
 
+    private MyNode removeLast() {
+        if (this.length == 0) {
+            return null;
+        }
+        MyNode pre = this.head;
+        MyNode temp = this.head;
+        while (temp.getNext() != null) {
+            pre = temp;
+            temp = (MyNode) temp.getNext();
+        }
+        this.tail = pre;
+        this.tail.setNext(null);
+        length--;
+        if (length == 0) {
+            this.head = null;
+            this.tail = null;
+        }
+        return temp;
+    }
+
     private MyNode traverseToIndex(Integer index) {
         int counter = 0;
         MyNode currentNode = this.head;
@@ -71,35 +95,29 @@ public class MyLinkedList {
         return currentNode;
     }
 
-    private MyNode reverse() {
-//        if (this.head == null || this.head.getNext() == null) {
-//            return;
-//        }
-//
-//        MyNode first = this.head;
-//        this.tail = this.head; // tail becomes the old head
-//        MyNode second = (MyNode) first.getNext();
-//
-//        while (second != null) {
-//            MyNode temp = (MyNode) second.getNext(); // store the next node
-//            second.setNext(first); // reverse the current node's pointer
-//            first = second; // move first one step forward
-//            second = temp; // move second one step forward
-//        }
-//
-//        this.head.setNext(null); // the old head is now the tail, set its next to null
-//        this.head = first; // the last node becomes the new head
-
-
-        MyNode prev = null;
-        MyNode current = this.head;
-        while (current != null) {
-            MyNode next = (MyNode) current.getNext();
-            current.setNext(prev);
-            prev = current;
-            current = next;
+    private void reverse() {
+        MyNode temp = head;
+        this.head = this.tail;
+        this.tail = temp;
+        MyNode after = null;
+        MyNode before = null;
+        for (int i = 0; i < this.length; i++) {
+            after = (MyNode) temp.getNext();
+            temp.setNext(before);
+            before = temp;
+            temp = after;
         }
-        return prev;
+
+
+//        MyNode prev = null;
+//        MyNode current = this.head;
+//        while (current != null) {
+//            MyNode next = (MyNode) current.getNext();
+//            current.setNext(prev);
+//            prev = current;
+//            current = next;
+//        }
+//        return prev;
 
     }
 
@@ -123,9 +141,12 @@ public class MyLinkedList {
 //        myLinkedList.remove(2);
         ArrayList<Object> list = myLinkedList.printList();
         System.out.println(list);
-        MyNode reversed = myLinkedList.reverse();
+        System.out.println(myLinkedList.removeLast());
+        System.out.println(myLinkedList.printList());
+        myLinkedList.reverse();
+        System.out.println(myLinkedList.printList());
 //        ArrayList<Object> reversed = myLinkedList.printList();
-        System.out.println(reversed);
+//        System.out.println(reversed);
 
     }
 }
